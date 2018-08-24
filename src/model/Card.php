@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: francisco
- * Date: 24/08/2018
- * Time: 19:15
- */
 
 namespace HOTesting\Model;
 
@@ -14,12 +8,17 @@ class Card
 
     private $suit;
 
+    /**
+     * Card constructor.
+     *
+     * @param $number
+     * @param $suit
+     */
     public function __construct($number, $suit)
     {
         $this->number = $number;
         $this->suit = $suit;
     }
-
 
     /**
      * @return mixed
@@ -37,6 +36,11 @@ class Card
         return $this->suit;
     }
 
+    /**
+     * @param Card $card
+     *
+     * @return bool
+     */
     public function isInMatchingSet(Card $card)
     {
         return $this->getNumber() == $card->getNumber();

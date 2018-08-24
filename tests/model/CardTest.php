@@ -1,8 +1,9 @@
 <?php
 
 use HOTesting\Model\Card;
+use PHPUnit\Framework\TestCase;
 
-class CardTest extends \PHPUnit\Framework\TestCase
+class CardTest extends TestCase
 {
     private $card;
 
@@ -30,9 +31,29 @@ class CardTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($this->card->isInMatchingSet($matchingCard), '<4S> should match <4H>');
     }
 
-    public function testIsNotInMatchingSet()
+    public function matchingCardDataProvider()
     {
-        $matchingCard = new Card('5', 'H');
-        $this->assertFalse($this->card->isInMatchingSet($matchingCard), '<4S> should not match <5H>');
+        return [
+            "4 of hearts" => [new Card('4', 'H'), true, 'should match'],
+            "5 of hearts" => [new Card('5', 'H'), false, 'should not match'],
+            "4 of clubs" => [new Card('5', 'C'), false, 'should not match']
+        ];
+    }
+
+    /**
+     * @dataProvider matchingCardDataProvider
+     *
+     * @param Card $matchingCard
+     * @param      $expected
+     * @param      $msg
+     */
+    public function testIsNotInMatchingSet(Card $matchingCard, $expected, $msg)
+    {
+        $this->assertEquals(
+            $expected,
+            $this->card->isInMatchingSet($matchingCard),
+            "<{$matchingCard->getNumber()}{$matchingCard->getSuit()}> ".$msg.
+            " <{$this->card->getNumber()}{$this->card->getSuit()}>"
+        );
     }
 }
