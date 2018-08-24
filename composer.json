@@ -1,0 +1,21 @@
+{
+    "name": "xicoria/hotesting",
+    "description": "Project to run examples from 'Hand-on Testing with PHPUnit How-to",
+    "minimum-stability": "dev",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Francisco Camargos",
+            "email": "kxdevel@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "HOTesting\\": "src/",
+            "HOTesting\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "7.3.2"
+    }
+}
