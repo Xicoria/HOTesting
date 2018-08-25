@@ -3,6 +3,7 @@
 namespace HOTesting\Tests\Model;
 
 use HOTesting\Model\Card;
+use http\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
 class CardTest extends TestCase
@@ -57,5 +58,18 @@ class CardTest extends TestCase
             "<{$matchingCard->getNumber()}{$matchingCard->getSuit()}> " . $msg .
             " <{$this->card->getNumber()}{$this->card->getSuit()}>"
         );
+    }
+
+    public function testExceptionIsThrown()
+    {
+        $card = $this->createMock(Card::class);
+
+        $card->expects($this->any())
+            ->method('getNumber')
+            ->will($this->throwException(new \RuntimeException('Test Exception')));
+
+        $this->expectException(\RuntimeException::class, 'Test Exception');
+
+        $card->getNumber();
     }
 }
