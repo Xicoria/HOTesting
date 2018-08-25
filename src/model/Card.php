@@ -4,8 +4,14 @@ namespace HOTesting\Model;
 
 class Card
 {
+    /**
+     * @var string
+     */
     private $number;
 
+    /**
+     * @var string
+     */
     private $suit;
 
     /**
@@ -37,6 +43,8 @@ class Card
     }
 
     /**
+     * Checks if cards match number
+     *
      * @param Card $card
      *
      * @return bool

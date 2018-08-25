@@ -1,5 +1,7 @@
 <?php
 
+namespace HOTesting\Tests\Model;
+
 use HOTesting\Model\Card;
 use PHPUnit\Framework\TestCase;
 
@@ -36,7 +38,7 @@ class CardTest extends TestCase
         return [
             "4 of hearts" => [new Card('4', 'H'), true, 'should match'],
             "5 of hearts" => [new Card('5', 'H'), false, 'should not match'],
-            "4 of clubs" => [new Card('5', 'C'), false, 'should not match']
+            "4 of clubs" => [new Card('5', 'C'), false, 'should not match'],
         ];
     }
 
@@ -52,7 +54,7 @@ class CardTest extends TestCase
         $this->assertEquals(
             $expected,
             $this->card->isInMatchingSet($matchingCard),
-            "<{$matchingCard->getNumber()}{$matchingCard->getSuit()}> ".$msg.
+            "<{$matchingCard->getNumber()}{$matchingCard->getSuit()}> " . $msg .
             " <{$this->card->getNumber()}{$this->card->getSuit()}>"
         );
     }

@@ -1,5 +1,7 @@
 <?php
 
+namespace HOTesting\Tests\Model;
+
 use HOTesting\Model\Card;
 use HOTesting\Model\CardCollection;
 use PHPUnit\Framework\TestCase;
