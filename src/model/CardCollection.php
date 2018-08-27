@@ -6,10 +6,12 @@ use Traversable;
 
 class CardCollection implements \IteratorAggregate
 {
+    use CardCollectionTrait;
+
     /**
      * @var array
      */
-    private $cards;
+    protected $cards;
 
     /**
      * CardCollection constructor.
@@ -17,14 +19,6 @@ class CardCollection implements \IteratorAggregate
     public function __construct()
     {
         $this->cards = [];
-    }
-
-    /**
-     * @return int
-     */
-    public function count()
-    {
-        return count($this->cards);
     }
 
     /**
