@@ -2,28 +2,26 @@
 /**
  * Created by PhpStorm.
  * User: francisco
- * Date: 25/08/2018
- * Time: 16:44
+ * Date: 26/08/2018
+ * Time: 23:47
  */
 
 namespace HOTesting\Model;
 
-class Player
+abstract class Player
 {
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var CardCollection
      */
-    private $hand;
+    protected $hand;
 
     /**
-     * Player constructor.
-     *
-     * @param                $name
+     * @param $name
      * @param CardCollection $hand
      */
     public function __construct($name, CardCollection $hand)
@@ -32,34 +30,37 @@ class Player
         $this->hand = $hand;
     }
 
-    /**
-     * Get the top $deck's card into the player's hand
-     *
-     * @param CardCollection $deck
-     */
-    public function drawCard(CardCollection $deck)
+
+    public function requestCard()
     {
-        $deck->moveTopCardTo($this->hand);
+        $cardNumber = $this->chooseCardNumber();
+
+        if (!$this->hasCard($cardNumber)) {
+            throw new \RuntimeException('Invalid card chosen by player');
+        }
+
+        return $cardNumber;
     }
 
     /**
-     * @return CardCollection
-     */
-    public function getHand()
-    {
-        return $this->hand;
-    }
-
-    /**
-     * Returns the first card that matches the number on players hand
-     *
      * @param $cardNumber
      *
-     * @return mixed
+     * @return bool
+     */
+    public function hasCard($cardNumber)
+    {
+        return $this->getCard($cardNumber) !== null;
+    }
+
+    /**
+     * @param $cardNumber
+     *
+     * @return Card|null
      */
     public function getCard($cardNumber)
     {
-        foreach ($this->getHand() as $card) {
+        /* @var $card Card */
+        foreach ($this->hand as $card) {
             if ($card->getNumber() == $cardNumber) {
                 return $card;
             }
@@ -68,25 +69,5 @@ class Player
         return null;
     }
 
-    /**
-     * Matches card on other player's hand and take it
-     *
-     * @param Player $otherPlayer
-     * @param        $number
-     *
-     * @return bool
-     */
-    public function takeCards(Player $otherPlayer, $number)
-    {
-        $matchedCard = $otherPlayer->getCard($number);
-
-        if ($matchedCard !== null) {
-            $this->hand->addCard($matchedCard);
-            $otherPlayer->getHand()->removeCard($matchedCard);
-
-            return true;
-        }
-
-        return false;
-    }
+    abstract protected function chooseCardNumber();
 }

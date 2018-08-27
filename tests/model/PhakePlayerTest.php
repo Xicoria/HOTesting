@@ -5,51 +5,32 @@ namespace HOTesting\Tests\Model;
 use HOTesting\Model\Card;
 use HOTesting\Model\CardCollection;
 use HOTesting\Model\Player;
-use Phake;
 use PHPUnit\Framework\TestCase;
 
-class PhakePlayerTest extends TestCase
-{
-    private $player;
+class PhakePlayerTest extends TestCase {
+    private $hand;
 
     /**
-     * @Mock HOTesting\Model\CardCollection
+     * @var Phake_IMock
      */
-    private $hand;
+    private $player;
 
     public function setUp()
     {
-        Phake::initAnnotations($this);
-        $this->player = new Player('John Smith', $this->hand);
+        $this->hand = new CardCollection();
+        $this->hand->addCard(new Card('A', 'S'));
+        $this->player = \Phake::partialMock(Player::class, 'John Smith', $this->hand);
     }
 
-    public function testDrawCard()
+    public function testRequestCardCallsChooseCardNumber()
     {
-        $deck = Phake::mock(CardCollection::class);
-        $this->player->drawCard($deck);
-        Phake::verify($deck)
-            ->moveTopCardTo($this->identicalTo($this->hand));
+        \Phake::when($this->player)
+            ->chooseCardNumber()
+            ->thenReturn('A');
+
+        $this->assertEquals('A', $this->player->requestCard());
+
+        \Phake::verify($this->player)->chooseCardNumber();
     }
 
-    public function testTakeCardFromPlayer()
-    {
-        $otherHand = Phake::mock(CardCollection::class);
-        $otherPlayer = Phake::mock(Player::class);
-        $card = Phake::mock(Card::class);
-
-        Phake::when($otherPlayer)
-            ->getCard(Phake::anyParameters())
-            ->thenReturn($card);
-
-        Phake::when($otherPlayer)
-            ->getHand()
-            ->thenReturn($otherHand);
-
-        $this->assertTrue($this->player->takeCards($otherPlayer, 4));
-
-        Phake::verify($this->hand)
-            ->addCard($this->identicalTo($card));
-        Phake::verify($otherHand)
-            ->removeCard($this->identicalTo($card));
-    }
 }

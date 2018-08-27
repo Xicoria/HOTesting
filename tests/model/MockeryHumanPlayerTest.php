@@ -4,11 +4,11 @@ namespace HOTesting\Tests\Model;
 
 use HOTesting\Model\Card;
 use HOTesting\Model\CardCollection;
-use HOTesting\Model\Player;
+use HOTesting\Model\HumanPlayer;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
-class MockeryPlayerTest extends TestCase
+class MockeryHumanPlayerTest extends TestCase
 {
     private $hand;
 
@@ -17,7 +17,7 @@ class MockeryPlayerTest extends TestCase
     public function setUp()
     {
         $this->hand = Mockery::mock(CardCollection::class);
-        $this->player = new Player('John Smith', $this->hand);
+        $this->player = new HumanPlayer('John Smith', $this->hand);
     }
 
     public function testDrawCard()
@@ -32,7 +32,7 @@ class MockeryPlayerTest extends TestCase
     public function testTakeCardFromPlayer()
     {
         $otherHand = Mockery::mock(CardCollection::class);
-        $otherPlayer = Mockery::mock(Player::class);
+        $otherPlayer = Mockery::mock(HumanPlayer::class);
         $card = Mockery::mock(Card::class);
 
         $otherPlayer->shouldReceive('getCard')
