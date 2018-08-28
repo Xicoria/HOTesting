@@ -47,4 +47,11 @@ class CardCollectionTest extends TestCase
 
         $this->assertEquals(new Card('2', 'S'), $card);
     }
+
+    public function testAddCardAffectAttribute()
+    {
+        $card = new Card('A', 'S');
+        $this->cardCollection->addCard($card);
+        $this->assertAttributeEquals([$card], 'cards', $this->cardCollection);
+    }
 }

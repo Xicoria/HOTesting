@@ -53,4 +53,13 @@ class CliFormatterTest extends TestCase
 
         $this->formatter->announcePlayerHand($player);
     }
+
+    public function testGetCard()
+    {
+        $method = new \ReflectionMethod(CliFormatter::class, 'getCard');
+        $method->setAccessible(true);
+
+        $card = new Card('A', 'S');
+        $this->assertEquals('AS', $method->invoke($this->formatter, $card));
+    }
 }

@@ -28,7 +28,7 @@ class CardCollection implements \IteratorAggregate
      */
     public function addCard(Card $card)
     {
-        $this->cards[] = $card;
+        array_push($this->cards, $card);
     }
 
     /**

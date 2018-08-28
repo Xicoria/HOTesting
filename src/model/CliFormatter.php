@@ -13,9 +13,19 @@ class CliFormatter
     {
         $out = [];
         foreach ($cards as $card) {
-            $out[] = $card->getNumber() . $card->getSuit();
+            $out[] = $this->getCard($card);
         }
 
         return implode(' ', $out);
+    }
+
+    /**
+     * @param $card
+     *
+     * @return string
+     */
+    private function getCard($card): string
+    {
+        return $card->getNumber() . $card->getSuit();
     }
 }
