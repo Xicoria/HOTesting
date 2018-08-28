@@ -69,5 +69,10 @@ abstract class Player
         return null;
     }
 
+    public function getHand()
+    {
+        return $this->hand;
+    }
+
     abstract protected function chooseCardNumber();
 }
